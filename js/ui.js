@@ -1,47 +1,63 @@
-import { COUNTRIES } from "./api.js"
-const COUNTRY_MAP = new Map(COUNTRIES.map(country => [country.cca3, country]));
-const MAIN_DIV = document.querySelector("#main_div");
+import { COUNTRIES, COUNTRY_MAP, MAIN_DIV, INPUT, DROP_DOWN_MENU, RESULT_DIV } from "./global_variables.js"
 
 
-// הדפסת תפריט בחירת מדינה
-function renderSelectBar() {
-    const select = document.querySelector("#select_id");
+//========== Listeners ==============
 
-    // תגית ברירת מחדל
-    select.innerHTML =
-        `
-    
+// מאזין לאירוע הקלדה
+INPUT.addEventListener("input", () => {
+    console.log("input event");
 
-     <option value="disabled" disabled selected>pick a country</option>
-    `
+    const searchValue = INPUT.value.toLowerCase();
+    const filteredCountries = COUNTRIES.filter(country =>
+        country.name.common.toLowerCase().startsWith(searchValue)
+    );
+    updateDropdown(filteredCountries);
+    DROP_DOWN_MENU.classList.remove("hidden"); // הצגת התפריט
+});
 
-    for (const country of COUNTRIES) {
-        const _name = country.name.common;
-        select.innerHTML +=
-            `
-        <option value="${_name}">${_name}</option>
-        `
+
+// מאזין לחיצה על שדה חיפוש
+INPUT.addEventListener("click", () => {
+    console.log("input click event");
+
+    updateDropdown(COUNTRIES);
+    DROP_DOWN_MENU.classList.remove("hidden"); // הצגת התפריט
+});
+
+
+// הסתרת התפריט בלחיצה מחוץ לאזור
+document.addEventListener("click", (event) => {
+    console.log("window click event");
+
+    if (!document.querySelector("#dropdown-container").contains(event.target)) {
+        DROP_DOWN_MENU.classList.add("hidden");
     }
-}
+});
 
+// ==============================================
 
-// ניקוי תצוגה
-function clearScreen() {
-    MAIN_DIV.innerHTML = "";
-    document.querySelector("#back_con").innerHTML = "";
-}
+// הצגת תפריט מדינות
+function updateDropdown(options) {
+    DROP_DOWN_MENU.innerHTML = ""; // ניקוי תפריט קודם
 
+    if (options.length === 0) {
+        DROP_DOWN_MENU.innerHTML = "<li>No matching countries</li>";
+        return;
+    }
 
-//
-function clearInput() {
-    document.querySelector("#search_id").value = '';
-}
+    options.forEach(country => {
+        const li = document.createElement("li");
+        li.textContent = country.name.common;
 
+        li.addEventListener("click", () => {
+            console.log("li click event");
 
-// תצוגת כרטיס מדינה
-function renderCountryCard(selectedCountry) {
-    printCard(selectedCountry);
-    neighbourListener();
+            DROP_DOWN_MENU.classList.add("hidden");
+            handleCountrySelected(country);
+        });
+
+        DROP_DOWN_MENU.appendChild(li);
+    });
 }
 
 
@@ -53,6 +69,31 @@ function renderMainPreview() {
     console.log(randCountries);
     // תצוגה מקדימה 
     renderCountries(randCountries);
+}
+
+// ניהול תצוגה מקדימה
+function renderCountries(acticeCountries = [...COUNTRIES]) {
+    clearScreen(); // ניקוי תוכן קיים
+
+    for (const country of acticeCountries) {
+        renderPreviewCard(country); // יצירת כרטיס מקדים לכל מדינה
+    }
+}
+
+
+// ניקוי תצוגה
+function clearScreen() {
+    MAIN_DIV.innerHTML = "";
+    document.querySelector("#back_con").innerHTML = "";
+    document.querySelector("#search_input").value = "";
+}
+
+
+// ניהול אירוע בחירת מדינה
+function handleCountrySelected(country) {
+    clearScreen();
+    printCard(country);
+    neighbourListener();
 }
 
 
@@ -67,7 +108,7 @@ function getRandomCountries(count = 5) {
 
 
 // כרטיס תצוגה מקדימה
-function renderPreview(country) {
+function renderPreviewCard(country) {
     const _name = country.name.common;
     // הפיכת שם המדינה ל-ID חוקי
     const sanitizedId = _name.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "");
@@ -83,7 +124,6 @@ function renderPreview(country) {
         `);
     // מאזין לבחירת מדינה
     addPreviewListener(sanitizedId, country);
-
 }
 
 
@@ -98,21 +138,10 @@ function addPreviewListener(id, country) {
 
     // הוספת מאזין לחיצה
     country_element.addEventListener("click", () => {
-        clearScreen();
-        clearInput();
+        console.log("preview click event");
 
-        renderCountryCard(country);
+        handleCountrySelected(country);
     });
-}
-
-
-// תצוגה מקדימה - כל המדינות
-function renderCountries(acticeCountries = [...COUNTRIES]) {
-    clearScreen(); // ניקוי תוכן קיים
-
-    for (const country of acticeCountries) {
-        renderPreview(country); // יצירת כרטיס מקדים לכל מדינה
-    }
 }
 
 
@@ -146,14 +175,15 @@ function neighbourListener() {
 
     neighbours.forEach(neighbour => {
         neighbour.addEventListener("click", (event) => {
+            console.log("neighbour click event");
+
             event.preventDefault(); // למנוע את הפעולה הדיפולטיבית של הלינק
 
             const countryName = neighbour.getAttribute("data-country");
             const borderCountry = COUNTRIES.find(country => country.name.common === countryName);
 
             if (borderCountry) {
-                clearScreen();
-                renderCountryCard(borderCountry);
+                handleCountrySelected(borderCountry);
             }
         });
     });
@@ -194,15 +224,15 @@ function getNeighboursLinks(neighbours) {
 //
 function printCard(country) {
     try {
-    // קבלת מטבעות, שפות, שכנים ולינקים לשכנים
-    const currencies = getCurrencies(country);
-    const languages = getLanguages(country);
-    const neighbours = getNeighbours(country);
-    const borderingCountriesLinks = getNeighboursLinks(neighbours);
-    // חישוב זום מבוסס שטח המדינה
-    const zoom = calculateZoom(country.area);
+        // קבלת מטבעות, שפות, שכנים ולינקים לשכנים
+        const currencies = getCurrencies(country);
+        const languages = getLanguages(country);
+        const neighbours = getNeighbours(country);
+        const borderingCountriesLinks = getNeighboursLinks(neighbours);
+        // חישוב זום מבוסס שטח המדינה
+        const zoom = calculateZoom(country.area);
 
-    MAIN_DIV.insertAdjacentHTML("beforeend", `
+        MAIN_DIV.insertAdjacentHTML("beforeend", `
         <div>
             <img src="${country.flags.png}" class="" alt="Flag of ${country.name.common}">
         </div>
@@ -232,8 +262,8 @@ function printCard(country) {
         </div>
     `);
 
-    handleBackButton();
-    
+        handleBackButton();
+
     } catch (error) {
         console.error("Error rendering map or card:", error);
         document.querySelector("#main_div").innerHTML = `
@@ -252,4 +282,4 @@ function calculateZoom(area) {
 }
 
 
-export { renderSelectBar, renderCountryCard, renderMainPreview, renderPreview, renderCountries, clearScreen, clearInput };
+export { handleCountrySelected, renderMainPreview, renderCountries, clearScreen };

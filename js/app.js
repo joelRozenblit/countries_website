@@ -1,22 +1,13 @@
-import { COUNTRIES } from "./api.js";
-import { renderSelectBar, renderCountryCard, renderMainPreview, renderCountries, clearScreen, clearInput } from "./ui.js";
+import { COUNTRIES } from "./global_variables.js";
+import { renderMainPreview, renderCountries, clearScreen } from "./ui.js";
 
 let activeCountries = [...COUNTRIES];
 
 
-async function init() {
+function init() {
     try {
-        // הצגת הרשימה הנפתחת
-        renderSelectBar();
-
         // תצוגת פתיחה
         renderMainPreview();
-
-        // הוספת מאזין לאירוע בחירה בתפריט
-        addSelectListener();
-
-        // הוספת מאזין לאירוע חיפוש
-        addSearchListener();
 
         // vav - הוספת מאזין לאירוע בחירה ב
         addNavListener();
@@ -54,7 +45,7 @@ function addNavListener() {
 // nav - טיפול באירוע
 function navEvent(linkId) {
     clearScreen(); // ניקוי המסך
-    clearInput();
+    // clearInput();
 
     if (linkId === "all") {
         renderCountries();
@@ -72,67 +63,6 @@ function navEvent(linkId) {
     } else {
         main_div.innerHTML = "<p>No countries found in this region.</p>";
     }
-}
-
-
-// הוספת מאזין לאירוע בחירה בתפריט
-function addSelectListener() {
-
-    const select = document.querySelector("#select_id");
-    select.addEventListener("change", (event) => {
-        clearScreen();
-        clearInput();
-
-        const selectedCountryName = event.target.value;
-
-        // מציאת המדינה הנבחרת
-        const selectedCountry = COUNTRIES.find(
-            (country) => country.name.common === selectedCountryName
-        );
-
-        if (selectedCountry) {
-            renderCountryCard(selectedCountry); // הצגת מידע על המדינה
-        }
-        else {
-            alert("country not found")
-        }
-    });
-}
-
-
-// הוספת מאזין לחיפוש
-function addSearchListener() {
-    const searchInput = document.querySelector("#search_id");
-    const src_btn = document.querySelector("#src_btn");
-    const main_div = document.querySelector("#main_div");
-
-    src_btn.addEventListener("click", () => {
-        const searchValue = searchInput.value.toLowerCase();
-
-        if (searchValue === "") {
-            clearScreen();
-            renderMainPreview();
-            return;
-        }
-
-        clearScreen();; // מנקה את המסך
-
-        // סינון המדינות לפי חיפוש שמתחיל עם שם המדינה
-        const filteredCountries = COUNTRIES.filter((country) =>
-            country.name.common.toLowerCase().startsWith(searchValue)
-        );
-
-        if (filteredCountries.length > 0) {
-            // עדכון המדינות המוצגות
-            activeCountries = [...filteredCountries];
-            handleSortChange(); // עדכון המיון
-            renderCountries(activeCountries); // תצוגה מחדש
-        } else {
-            // אם לא נמצאו מדינות
-            main_div.innerHTML = "<p>No countries match your search.</p>";
-        }
-
-    });
 }
 
 

@@ -66,15 +66,17 @@
                 </div>
             </nav>
 
-            <div class="select-container">
-                <div class="search-container">
-                    <input type="text" class="form-control" placeholder="Search..." id="search_id">
-                    <button id="src_btn" class="search-button">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-                <select id="select_id" class="form-select form-select-sm"></select>
+            <div id="dropdown-container">
+                <!-- תיבת חיפוש -->
+                <input type="text" id="search_input" placeholder="Search for a country..." />
+            
+                <!-- תפריט נפתח -->
+                <ul id="dropdown_menu" class="hidden">
+                    <!-- אפשרויות מתעדכנות כאן -->
+                </ul>
             </div>
+            
+            <div id="result"></div>
 
             <div class="sort_div select-container">
                 Sort By:

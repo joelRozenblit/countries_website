@@ -1,8 +1,5 @@
 const API_URL_ALL = "https://restcountries.com/v3.1/all?fields=name,capital,currencies,region,languages,flags,population,latlng,borders,fifa,cca3,latlng,area,maps";
 
-// API - קבלת הנתונים מה
-const COUNTRIES = await getAllCountries();
-
 
 // פונקציה אסינכרונית לקבלת כל המדינות
 async function getAllCountries() {
@@ -24,5 +21,5 @@ async function getAllCountries() {
 
 
 // ייצוא הפונקציות
-export { getAllCountries, COUNTRIES };
+export { getAllCountries };
 
