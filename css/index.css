@@ -1,0 +1,155 @@
+/* עיצוב כללי */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* עיצוב עבור חיפוש ותפריט בחירה */
+.search-container, #select_id {
+    /* margin: 10px 10px 15px 0; */
+     /* מרווח בין האלמנטים */
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 200px; /* קביעת רוחב קבוע לחיפוש */
+}
+
+.search-container .form-control {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    outline: none;
+}
+
+.search-button {
+    background-color: #5a6877;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button:hover {
+    background-color: #464b51;
+    color: white;
+}
+
+.search-button i {
+    font-size: 16px;
+}
+
+/* עיצוב תפריט בחירה */
+.select-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px; /* מרווח בין תיבת חיפוש לתפריט */
+}
+
+#select_id {
+    width: 200px; /* קביעת רוחב קבוע לתפריט הבחירה */
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #baafaf;
+}
+
+/* עיצוב לתצוגת המדינות */
+#main_div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+
+
+/* עיצוב הכרטיסים */
+.card {
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* עיצוב תוכן הכרטיס */
+.card-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+/* עיצוב לתצוגת כרטיס מדינה */
+.container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container h2 {
+    margin-top: 10px;
+    font-size: 22px;
+    color: #444;
+}
+
+.container p {
+    font-size: 16px;
+    margin-top: 10px;
+    line-height: 1.5;
+    color: #666;
+}
+
+/* עיצוב כפתורים */
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3f4041;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
