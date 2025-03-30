@@ -1,51 +1,13 @@
 import { COUNTRIES } from "./global_variables.js";
-import { renderMainPreview, renderCountries, clearScreen } from "./ui.js";
+import { renderMainPreview, renderCountries, clearScreen, printCard } from "./ui.js";
+import { neighbourListener, addBackListener } from "./listeners.js"
 
 let activeCountries = [...COUNTRIES];
 
 
-function init() {
-    try {
-        // תצוגת פתיחה
-        renderMainPreview();
-
-        // vav - הוספת מאזין לאירוע בחירה ב
-        addNavListener();
-
-        // הוספת מאזין למיון
-        addSortListener();
-    } catch (err) {
-        console.error("Error initializing application:", err);
-    }
-}
-
-
-// nav - הוספת מאזין ל
-function addNavListener() {
-    // בוחרים את כל הקישורים ב-Nav
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    // לולאה שעוברת על כל קישור ומוסיפה מאזין
-    navLinks.forEach((link) => {
-        link.addEventListener("click", (event) => {
-            // מניעת פעולת ברירת מחדל (מעבר דף)
-            event.preventDefault();
-
-            // קבלת ה-id של הלינק שנלחץ
-            const linkId = link.id;
-            console.log(`Link clicked with ID: ${linkId}`);
-
-            // קריאה לפונקציה שמטפלת באירוע עם המידע מה-id
-            navEvent(linkId);
-        });
-    });
-}
-
-
-// nav - טיפול באירוע
+// nav - ניהול אירוע
 function navEvent(linkId) {
     clearScreen(); // ניקוי המסך
-    // clearInput();
 
     if (linkId === "all") {
         renderCountries();
@@ -66,15 +28,13 @@ function navEvent(linkId) {
 }
 
 
-// מאזין למיון
-function addSortListener() {
-    document.querySelector("#sort-options").addEventListener("change", () => {
-        handleSortChange();
-    })
+// עדכון המדינות המוצגות
+function updateActiveCountries(countries) {
+    activeCountries = [...countries];
 }
 
 
-// מיון המדינות המוצגות
+// ניהול בחירת מיון
 function handleSortChange() {
     const sortBy = document.querySelector("#sort-options").value;
 
@@ -93,6 +53,38 @@ function handleSortChange() {
 }
 
 
+// ניהול אירוע בחירת מדינה
+function handleCountrySelected(country) {
+    clearScreen();
+    printCard(country);
+    neighbourListener();
+}
 
-// קריאה לפונקציה הראשית
-init();
+
+// ניהול כפתור חזרה
+function handleBackButton() {
+    const backCon = document.querySelector("#back_con");
+
+    // מחיקה של כפתור קיים אם נמצא
+    const existingButton = document.querySelector("#back_id");
+    if (existingButton) {
+        existingButton.remove();
+    }
+
+    // הוספת כפתור חזרה
+    backCon.insertAdjacentHTML("beforeend", `
+        <button id="back_id" class="btn btn-primary">Back</button>
+    `);
+
+    // מאזין לחיצה לכפתור
+    addBackListener();
+}
+
+
+//==================================
+// ======== program start ========
+//==================================
+renderMainPreview();
+//==================================
+
+export { navEvent, handleSortChange, handleCountrySelected, handleBackButton, updateActiveCountries }

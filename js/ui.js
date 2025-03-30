@@ -1,40 +1,8 @@
 import { COUNTRIES, COUNTRY_MAP, MAIN_DIV, INPUT, DROP_DOWN_MENU, RESULT_DIV } from "./global_variables.js"
+import { addPreviewListener, addBackListener } from "./listeners.js";
+import { getRandomCountries,getNeighboursLinks,getNeighbours,getLanguages,getCurrencies, calculateZoom } from "./helper_functions.js"
+import { handleCountrySelected, handleBackButton, updateActiveCountries } from "./app.js";
 
-
-//========== Listeners ==============
-
-// מאזין לאירוע הקלדה
-INPUT.addEventListener("input", () => {
-    console.log("input event");
-
-    const searchValue = INPUT.value.toLowerCase();
-    const filteredCountries = COUNTRIES.filter(country =>
-        country.name.common.toLowerCase().startsWith(searchValue)
-    );
-    updateDropdown(filteredCountries);
-    DROP_DOWN_MENU.classList.remove("hidden"); // הצגת התפריט
-});
-
-
-// מאזין לחיצה על שדה חיפוש
-INPUT.addEventListener("click", () => {
-    console.log("input click event");
-
-    updateDropdown(COUNTRIES);
-    DROP_DOWN_MENU.classList.remove("hidden"); // הצגת התפריט
-});
-
-
-// הסתרת התפריט בלחיצה מחוץ לאזור
-document.addEventListener("click", (event) => {
-    console.log("window click event");
-
-    if (!document.querySelector("#dropdown-container").contains(event.target)) {
-        DROP_DOWN_MENU.classList.add("hidden");
-    }
-});
-
-// ==============================================
 
 // הצגת תפריט מדינות
 function updateDropdown(options) {
@@ -63,7 +31,6 @@ function updateDropdown(options) {
 
 // תצוגת מסך פתיחה
 function renderMainPreview() {
-    clearScreen();
     // יצירת מערך של 6 מדינות רנדומליות
     const randCountries = getRandomCountries();
     console.log(randCountries);
@@ -78,6 +45,8 @@ function renderCountries(acticeCountries = [...COUNTRIES]) {
     for (const country of acticeCountries) {
         renderPreviewCard(country); // יצירת כרטיס מקדים לכל מדינה
     }
+
+    updateActiveCountries(acticeCountries); // עדכון מערך המדינות המוצגות
 }
 
 
@@ -86,24 +55,6 @@ function clearScreen() {
     MAIN_DIV.innerHTML = "";
     document.querySelector("#back_con").innerHTML = "";
     document.querySelector("#search_input").value = "";
-}
-
-
-// ניהול אירוע בחירת מדינה
-function handleCountrySelected(country) {
-    clearScreen();
-    printCard(country);
-    neighbourListener();
-}
-
-
-// יצירת מערך של 6 מדינות רנדומליות
-function getRandomCountries(count = 5) {
-    const indices = new Set();
-    while (indices.size < count) {
-        indices.add(Math.floor(Math.random() * COUNTRIES.length));
-    }
-    return Array.from(indices).map(index => COUNTRIES[index]);
 }
 
 
@@ -127,101 +78,7 @@ function renderPreviewCard(country) {
 }
 
 
-// מאזין לבחירת מדינה
-function addPreviewListener(id, country) {
-    // ID - בחירת האלמנט לפי ה
-    const country_element = document.querySelector(`#${id}_id`);
-    if (!country_element) {
-        console.error(`Element with ID ${id}_id not found`);
-        return;
-    }
-
-    // הוספת מאזין לחיצה
-    country_element.addEventListener("click", () => {
-        console.log("preview click event");
-
-        handleCountrySelected(country);
-    });
-}
-
-
-// הוספת כפתור חזרה
-function handleBackButton() {
-    const backCon = document.querySelector("#back_con");
-
-    // מחיקה של כפתור קיים אם נמצא
-    const existingButton = document.querySelector("#back_id");
-    if (existingButton) {
-        existingButton.remove();
-    }
-
-    // הוספת כפתור חזרה
-    backCon.insertAdjacentHTML("beforeend", `
-        <button id="back_id" class="btn btn-primary">Back</button>
-    `);
-
-    // מאזין לחיצה לכפתור
-    const backButton = document.querySelector("#back_id");
-    backButton.addEventListener("click", () => {
-        console.log("Back button clicked");
-        renderMainPreview();
-    });
-}
-
-
-// מאזין לינק מדינה שכינה
-function neighbourListener() {
-    const neighbours = document.querySelectorAll('[data-country]');
-
-    neighbours.forEach(neighbour => {
-        neighbour.addEventListener("click", (event) => {
-            console.log("neighbour click event");
-
-            event.preventDefault(); // למנוע את הפעולה הדיפולטיבית של הלינק
-
-            const countryName = neighbour.getAttribute("data-country");
-            const borderCountry = COUNTRIES.find(country => country.name.common === countryName);
-
-            if (borderCountry) {
-                handleCountrySelected(borderCountry);
-            }
-        });
-    });
-}
-
-
-//
-function getCurrencies(country) {
-    const c = country.currencies ? Object.values(country.currencies).map(currency => `${currency.name} (${currency.symbol || 'N/A'})`).join(", ") : "N/A";
-
-    return c;
-}
-
-//
-function getLanguages(country) {
-    const l = country.languages ? Object.values(country.languages).join(", ") : "N/A";
-
-    return l;
-}
-
-//
-function getNeighbours(country) {
-    return (country.borders || []).map(border => COUNTRY_MAP.get(border)?.name.common || "Unknown");
-}
-
-//
-function getNeighboursLinks(neighbours) {
-    const n_l = neighbours.length > 0
-        ? neighbours.map(country => {
-            return `<a href="#" data-country="${country}" title="${country}">${country}</a>`;
-        }).join(", ")
-        : "no neighboring countries";
-
-    return n_l;
-}
-
-
-//
+// כרטיס מדינה מלא
 function printCard(country) {
     try {
         // קבלת מטבעות, שפות, שכנים ולינקים לשכנים
@@ -272,14 +129,13 @@ function printCard(country) {
     }
 }
 
-// 
-function calculateZoom(area) {
-    if (!area || isNaN(area)) return 6 // ערך ברירת מחדל אם אין נתון
-    if (area < 5000) return 8; // מדינות קטנות
-    if (area < 20000) return 7; // מדינות בינוניות
-    if (area < 100000) return 6; // מדינות בינוניות-גדולות
-    return 5; // מדינות גדולות
-}
 
 
-export { handleCountrySelected, renderMainPreview, renderCountries, clearScreen };
+
+export {
+    renderMainPreview,
+    renderCountries,
+    clearScreen,
+    printCard,
+    updateDropdown
+};
