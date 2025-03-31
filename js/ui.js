@@ -1,4 +1,4 @@
-import { COUNTRIES, COUNTRY_MAP, MAIN_DIV, INPUT, DROP_DOWN_MENU, RESULT_DIV } from "./global_variables.js"
+import { COUNTRIES, COUNTRY_MAP, MAIN_DIV, INPUT, DROP_DOWN_MENU, CARD_CON, MAP_CON, FLAG_CON, DETAILS_CON, PREVIEW_CON } from "./global_variables.js"
 import { addPreviewListener, addBackListener } from "./listeners.js";
 import { getRandomCountries, getNeighboursLinks, getNeighbours, getLanguages, getCurrencies, calculateZoom } from "./helper_functions.js"
 import { handleCountrySelected, handleBackButton, updateActiveCountries } from "./app.js";
@@ -51,7 +51,10 @@ function renderCountries(acticeCountries = [...COUNTRIES]) {
 
 // ניקוי תצוגה
 function clearScreen() {
-    MAIN_DIV.innerHTML = "";
+    PREVIEW_CON.innerHTML = "";
+    MAP_CON.innerHTML = "";
+    FLAG_CON.innerHTML = "";
+    DETAILS_CON.innerHTML = "";
     document.querySelector("#back_con").innerHTML = "";
     document.querySelector("#search_input").value = "";
 }
@@ -64,7 +67,7 @@ function renderPreviewCard(country) {
     const sanitizedId = _name.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "");
 
     // הוספת כרטיס למדינה
-    MAIN_DIV.insertAdjacentHTML("beforeend", `
+    PREVIEW_CON.insertAdjacentHTML("beforeend", `
             <div class="card gray" style="width: 18rem;" id="${sanitizedId}_id">
                 <div class="img-container" style="padding: 10px;">
                 <img src="${country.flags.png}" class="card-img-top" alt="Flag of ${_name}">
@@ -80,7 +83,9 @@ function renderPreviewCard(country) {
 
 
 // כרטיס מדינה מלא
-async function printCard(country) {
+function renderCountryCard(country) {
+    console.log(DETAILS_CON);
+    
     try {
         console.log(country);
         // קבלת מטבעות, שפות, שכנים ולינקים לשכנים
@@ -89,12 +94,10 @@ async function printCard(country) {
         const neighbours = getNeighbours(country);
         const borderingCountriesLinks = getNeighboursLinks(neighbours);
 
-        MAIN_DIV.insertAdjacentHTML("beforeend", `
-        <div>
+        FLAG_CON.insertAdjacentHTML("beforeend", `
             <img src="${country.flags.png}" alt="Flag of ${country.name.common}">
-        </div>
-         
-        <div>
+        `); 
+        DETAILS_CON.insertAdjacentHTML("beforeend", `
             <h2>${country.name.common}</h2>
             <p>
                 <b>Population:</b> ${country.population.toLocaleString()} <br>
@@ -104,29 +107,17 @@ async function printCard(country) {
                 <b>Currency:</b> ${currencies} <br>
                 <b>Bordering Countries:</b> ${borderingCountriesLinks}
             </p>
-        </div>
-        
-        <div id="map-container">
-            <span class="loader"></span>
-        </div>
-    `);
-
-        // טעינת מפה והצגת ספינר בזמן הטעינה
-        await loadMap(country);
-        // הסרת הספינר רק אם המפה נטענה בהצלחה
-        document.querySelector(".loader").classList.add("hidden");
-        //
-        handleBackButton();
+    `); 
     } catch (error) {
-        console.error("Error rendering map or card:", error);
-        document.querySelector("#map-container").innerHTML = `
-            <p>Failed to load map or country details.<br> Please try again later.</p>
+        console.error("Error rendering  card:", error);
+        CARD_CON.innerHTML = `
+            <p>Failed to load country details.<br> Please try again later.</p>
         `;
     }
 }
 
 
-//
+// טעינת מפה
 async function loadMap(country) {
     // בדיקה אם קיימים קואורדינטות
     if (!country.latlng || country.latlng.length < 2) {
@@ -136,7 +127,7 @@ async function loadMap(country) {
     // חישוב זום מבוסס שטח המדינה
     const zoom = calculateZoom(country.area);
 
-    document.querySelector("#map-container").insertAdjacentHTML("beforeend", `
+    MAP_CON.insertAdjacentHTML("beforeend", `
         <iframe 
             width="100%" 
             height="400px" 
@@ -150,12 +141,21 @@ async function loadMap(country) {
 }
 
 
+//
+function renderSpinner() {
+    MAP_CON.insertAdjacentHTML("beforeend", `
+        <span class="loader"></span>
+        `
+    )
+}
 
 
 export {
     renderMainPreview,
     renderCountries,
     clearScreen,
-    printCard,
-    updateDropdown
+    renderCountryCard,
+    updateDropdown,
+    loadMap,
+    renderSpinner
 };

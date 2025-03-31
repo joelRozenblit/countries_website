@@ -19,9 +19,9 @@ h1{
 
 nav {
     justify-content: space-between;
-    margin: 0;
+    margin: 5px;
+    border-radius: 10px;
 }
-
 
 
 .search-container {
@@ -76,8 +76,14 @@ nav {
     background-color: #baafaf;
 }
 
+#preview-con {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 /* עיצוב לתצוגת המדינות */
-#main_div {
+#card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -203,7 +209,7 @@ button:hover {
 }
 
 
-.sort_div {
+#sort_div {
     padding: 10px;
 }
 

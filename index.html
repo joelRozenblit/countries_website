@@ -29,46 +29,46 @@
         <h1 class="display-2">Countries Data</h1>
         
         <div class="sticky">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary dark">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
 
-                <div class="container-fluid dark">
-                    <button class="navbar-toggle " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon white"></span>
+                        <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse dark" id="navbarNav">
+                    <div class="collapse navbar-collapse" id="navbarNav">
                         <!-- תפריט nav -->
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item white">
-                                <a class="nav-link white" id="all" href="#">All Countries</a>
+                            <li class="nav-item">
+                                <a class="nav-link" id="all" href="#">All Countries</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link white" id="Asia" href="#">Asia</a>
+                                <a class="nav-link" id="Asia" href="#">Asia</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link white" id="Africa" href="#">Africa</a>
+                                <a class="nav-link" id="Africa" href="#">Africa</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link white" id="Americas" href="#">Americas</a>
+                                <a class="nav-link" id="Americas" href="#">Americas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link white" id="Europe" href="#">Europe</a>
+                                <a class="nav-link" id="Europe" href="#">Europe</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link white" id="Oceania" href="#">Oceania</a>
+                                <a class="nav-link" id="Oceania" href="#">Oceania</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link white" id="Antarctic" href="#">Antarctic</a>
+                                <a class="nav-link" id="Antarctic" href="#">Antarctic</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link white" id="Random" href="#">Randomal Country</a>
+                                <a class="nav-link" id="Random" href="#">Randomal Country</a>
                             </li>
                         </div>
 
                             <div id="dropdown-container">
                                 <!-- תיבת חיפוש -->
-                                <input type="text" class="mr-sm-2 dark" id="search_input"
+                                <input type="text" class="mr-sm-2" id="search_input"
                                     placeholder="Search for a country..." aria-label="Search" />
 
                                 <!-- תפריט נפתח -->
@@ -82,7 +82,7 @@
 
             <div id="result"></div>
 
-            <div class="sort_div select-container">
+            <div class="select-container" id="sort_div">
                 Sort By:
                 <select id="sort-options" class="form-select-sm">
                     <option value="name">Alphabetical</option>
@@ -99,7 +99,17 @@
 
     <!-- start main -->
     <main>
-        <div id="main_div"></div>
+        <div id="main_div">
+            <div id="preview-con"></div>
+
+            <div id="card-container">
+                <div id="flag_details">
+                    <div id="flag-con"></div>
+                    <div id="details-con"></div>
+                </div>
+                <div id="map-container"></div>
+            </div>
+        </div>
         <div id="back_con"></div>
     </main>
     <!-- end main -->

@@ -1,4 +1,4 @@
-import { COUNTRIES, COUNTRY_MAP, MAIN_DIV, INPUT, DROP_DOWN_MENU, RESULT_DIV } from "./global_variables.js"
+import { COUNTRIES, COUNTRY_MAP, MAIN_DIV, INPUT, DROP_DOWN_MENU, SORT_DIV } from "./global_variables.js"
 import { navEvent, handleSortChange, handleCountrySelected } from "./app.js"
 import { updateDropdown, renderMainPreview } from "./ui.js"
 
@@ -106,6 +106,7 @@ function addBackListener(acticeCountries) {
     const backButton = document.querySelector("#back_id");
     backButton.addEventListener("click", () => {
         console.log("Back button clicked");
+        SORT_DIV.classList.remove("hidden")
         renderMainPreview(acticeCountries);
     });
 }

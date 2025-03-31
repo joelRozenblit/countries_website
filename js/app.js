@@ -1,5 +1,5 @@
-import { COUNTRIES } from "./global_variables.js";
-import { renderMainPreview, renderCountries, clearScreen, printCard } from "./ui.js";
+import { COUNTRIES, SORT_DIV } from "./global_variables.js";
+import { renderMainPreview, renderCountries, clearScreen, renderCountryCard, loadMap, renderSpinner } from "./ui.js";
 import { neighbourListener, addBackListener } from "./listeners.js"
 
 let activeCountries = [...COUNTRIES];
@@ -15,7 +15,7 @@ function navEvent(linkId) {
             break;
         case "Random":
             const randomIndex = Math.floor(Math.random() * COUNTRIES.length);
-            handleCountrySelected(COUNTRIES[randomIndex]); 
+            handleCountrySelected(COUNTRIES[randomIndex]);
             break;
         default:
             const filteredCountries = COUNTRIES.filter(
@@ -61,10 +61,26 @@ function handleSortChange() {
 // ניהול אירוע בחירת מדינה
 function handleCountrySelected(country) {
     clearScreen();
-    printCard(country);
+    handleCardPrinting(country);
     neighbourListener();
 }
 
+
+//
+async function handleCardPrinting(country) {
+    // הדפסת כרטיס מדינה
+    renderCountryCard(country);
+    // הוספת ספינר
+    renderSpinner();
+    // הסתרת בחירת מיון
+    SORT_DIV.classList.add("hidden");
+    // טעינת מפה
+    await loadMap(country);
+    // הסרת הספינר רק אם המפה נטענה בהצלחה
+    document.querySelector(".loader").classList.add("hidden");
+    // הוספת כפתור חזרה
+    handleBackButton();
+}
 
 // ניהול כפתור חזרה
 function handleBackButton() {
