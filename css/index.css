@@ -6,11 +6,13 @@ body {
     padding: 0;
     background-image: url("/img/earth.png");
     background-size: cover;
+    background-attachment: fixed;
 }
 
 
 
 h1{
+    text-align: center;
     padding: 20px;
     margin: 0;
 }
@@ -87,7 +89,6 @@ nav {
 /* עיצוב הכרטיסים */
 .card {
     width: 300px;
-    border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -196,11 +197,59 @@ button:hover {
 }
 #dropdown_menu li:hover {
     background-color: #f0f0f0;
+    color: #000;
 }
-.hidden {
-    display: none;
-}
+
 
 .sort_div {
     padding: 10px;
+}
+
+
+.dark {
+    background-color: #000;
+    text-emphasis-color: #a49c9c;
+}
+
+.gray {
+    background-color: #0d0d0da1;
+}
+
+.white {
+    color: #eee0e0;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display:grid;
+    -webkit-mask: conic-gradient(from 15deg,#0000,#000);
+    animation: l26 1s infinite steps(12);
+  }
+  .loader,
+  .loader:before,
+  .loader:after{
+    background:
+      radial-gradient(closest-side at 50% 12.5%,
+       #f03355 96%,#0000) 50% 0/20% 80% repeat-y,
+      radial-gradient(closest-side at 12.5% 50%,
+       #f03355 96%,#0000) 0 50%/80% 20% repeat-x;
+  }
+  .loader:before,
+  .loader:after {
+    content: "";
+    grid-area: 1/1;
+    transform: rotate(30deg);
+  }
+  .loader:after {
+    transform: rotate(60deg);
+  }
+  
+  @keyframes l26 {
+    100% {transform:rotate(1turn)}
+  }
+
+.hidden {
+    display: none;
 }
