@@ -30,9 +30,7 @@ function updateDropdown(options) {
 
 
 // תצוגת מסך פתיחה
-function renderMainPreview() {
-    // יצירת מערך של 6 מדינות רנדומליות
-    const randCountries = getRandomCountries();
+function renderMainPreview(randCountries = getRandomCountries()) { // יצירת מערך של 6 מדינות רנדומליות - אם לא מתקבל פרמטר 
     console.log(randCountries);
     // תצוגה מקדימה 
     renderCountries(randCountries);
@@ -81,6 +79,8 @@ function renderPreviewCard(country) {
 // כרטיס מדינה מלא
 function printCard(country) {
     try {
+        console.log(country);
+        
         // קבלת מטבעות, שפות, שכנים ולינקים לשכנים
         const currencies = getCurrencies(country);
         const languages = getLanguages(country);
@@ -118,7 +118,7 @@ function printCard(country) {
             </iframe>
         </div>
     `);
-
+    
         handleBackButton();
 
     } catch (error) {

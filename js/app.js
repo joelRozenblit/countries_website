@@ -9,21 +9,26 @@ let activeCountries = [...COUNTRIES];
 function navEvent(linkId) {
     clearScreen(); // ניקוי המסך
 
-    if (linkId === "all") {
-        renderCountries();
-        return;
-    }
+    switch (linkId) {
+        case "all":
+            renderCountries(); // הצגת כל המדינות
+            break;
+        case "Random":
+            const randomIndex = Math.floor(Math.random() * COUNTRIES.length);
+            handleCountrySelected(COUNTRIES[randomIndex]); 
+            break;
+        default:
+            const filteredCountries = COUNTRIES.filter(
+                (country) => country.region.toLowerCase() === linkId.toLowerCase()
+            );
 
-    const filteredCountries = COUNTRIES.filter(
-        (country) => country.region.toLowerCase() === linkId.toLowerCase()
-    );
-
-    if (filteredCountries.length > 0) {
-        activeCountries = [...filteredCountries];
-        handleSortChange(); // עדכון המיון
-        renderCountries(activeCountries); // תצוגה מחדש
-    } else {
-        main_div.innerHTML = "<p>No countries found in this region.</p>";
+            if (filteredCountries.length > 0) {
+                activeCountries = [...filteredCountries]; // עדכון רשימת המדינות הפעילות
+                handleSortChange(); // עדכון המיון
+                renderCountries(activeCountries); // הצגת המדינות המסוננות
+            } else {
+                main_div.innerHTML = "<p>No countries found in this region.</p>";
+            }
     }
 }
 
@@ -77,14 +82,18 @@ function handleBackButton() {
     `);
 
     // מאזין לחיצה לכפתור
-    addBackListener();
+    addBackListener(activeCountries);
 }
 
 
+
+
 //==================================
-// ======== program start ========
+//   ====== program start ======
 //==================================
 renderMainPreview();
 //==================================
+
+
 
 export { navEvent, handleSortChange, handleCountrySelected, handleBackButton, updateActiveCountries }

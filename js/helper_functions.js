@@ -47,7 +47,7 @@ function getNeighbours(country) {
 // קבלנים קישורים לשכנים
 function getNeighboursLinks(neighbours) {
     const n_l = neighbours.length > 0
-        ? neighbours.map(country => {
+    ? neighbours.map(country => {
             return `<a href="#" data-country="${country}" title="${country}">${country}</a>`;
         }).join(", ")
         : "no neighboring countries";

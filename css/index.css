@@ -1,16 +1,23 @@
 /* עיצוב כללי */
 body {
-    font-family: Arial, Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Agbalumo, Verdana, Geneva, Tahoma, sans-serif;
+    color: #e9e7e7;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
+    background-image: url("/img/ChatGPT\ Image\ Mar\ 31\,\ 2025\,\ 02_06_27\ PM.png");
+    background-size: cover;
 }
 
-/* עיצוב עבור חיפוש ותפריט בחירה */
-.search-container, #select_id {
-    /* margin: 10px 10px 15px 0; */
-     /* מרווח בין האלמנטים */
+
+
+h1{
+    padding: 20px;
+    margin: 0;
+}
+
+nav {
+    justify-content: space-between;
+    margin: 0;
 }
 
 .search-container {
@@ -72,6 +79,7 @@ body {
     justify-content: center;
     gap: 20px;
     padding: 20px;
+
 }
 
 
@@ -162,6 +170,7 @@ button:hover {
     position: relative;
     width: 300px;
 }
+
 #search_input {
     width: 100%;
     padding: 10px;
@@ -190,4 +199,8 @@ button:hover {
 }
 .hidden {
     display: none;
+}
+
+.sort_div {
+    padding: 10px;
 }

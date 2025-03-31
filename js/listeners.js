@@ -102,11 +102,11 @@ function neighbourListener() {
 
 
 // מאזין לכפתור חזרה
-function addBackListener() {
+function addBackListener(acticeCountries) {
     const backButton = document.querySelector("#back_id");
     backButton.addEventListener("click", () => {
         console.log("Back button clicked");
-        renderMainPreview();
+        renderMainPreview(acticeCountries);
     });
 }
 
