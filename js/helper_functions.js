@@ -50,7 +50,7 @@ function getNeighboursLinks(neighbours) {
     ? neighbours.map(country => {
             return `<a href="#" data-country="${country}" title="${country}">${country}</a>`;
         }).join(", ")
-        : "no neighboring countries";
+        : "None";
 
     return n_l;
 }

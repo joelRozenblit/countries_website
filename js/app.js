@@ -66,7 +66,7 @@ function handleCountrySelected(country) {
 }
 
 
-//
+// ניהול הדפסת כרטיס מדינה
 async function handleCardPrinting(country) {
     // הדפסת כרטיס מדינה
     renderCountryCard(country);
@@ -76,8 +76,6 @@ async function handleCardPrinting(country) {
     SORT_DIV.classList.add("hidden");
     // טעינת מפה
     await loadMap(country);
-    // הסרת הספינר רק אם המפה נטענה בהצלחה
-    document.querySelector(".loader").classList.add("hidden");
     // הוספת כפתור חזרה
     handleBackButton();
 }

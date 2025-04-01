@@ -1,5 +1,5 @@
-//==========================
-//======= IMPORTS ==========
+//=============================
+//========= IMPORTS ===========
 
 import {
     COUNTRIES,
@@ -35,7 +35,7 @@ function updateDropdown(options) {
     DROP_DOWN_MENU.innerHTML = ""; // ניקוי תפריט קודם
 
     if (options.length === 0) {
-        DROP_DOWN_MENU.innerHTML = "<li>No matching countries</li>";
+        DROP_DOWN_MENU.innerHTML = `<li class="dark">No matching countries</li>`;
         return;
     }
 
@@ -163,6 +163,8 @@ async function loadMap(country) {
             src="https://maps.google.com/maps?q=${country.latlng[0]},${country.latlng[1]}&hl=es&z=${zoom}&output=embed">
         </iframe>
     `);
+    // הסרת הספינר רק אם המפה נטענה בהצלחה
+    document.querySelector(".loader").classList.add("hidden");
 }
 
 
