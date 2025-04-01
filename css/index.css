@@ -4,7 +4,7 @@ body {
     color: #e9e7e7;
     margin: 0;
     padding: 0;
-    background-image: url("/img/earth.png");
+    background-image: url("img/earth.png");
     background-size: cover;
     background-attachment: fixed;
 }
@@ -80,6 +80,7 @@ nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    
 }
 
 /* עיצוב לתצוגת המדינות */
@@ -96,6 +97,9 @@ nav {
 
 /* עיצוב הכרטיסים */
 .card {
+    flex: 1 1 calc(33.33% - 40px); /* שליש מהשורה עם מרווח */
+    max-width: 300px; /* מקסימום רוחב לכרטיס */
+    margin: 5px;
     width: 300px;
     border-radius: 8px;
     overflow: hidden;
@@ -103,6 +107,19 @@ nav {
     background-color: #fff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+@media (max-width: 992px) {
+    .card {
+        flex: 1 1 calc(50% - 40px); /* שני כרטיסים בשורה */
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        flex: 1 1 calc(100% - 40px); /* כרטיס אחד בשורה */
+    }
+}
+
 
 .card:hover {
     transform: translateY(-5px);
