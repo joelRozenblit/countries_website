@@ -113,4 +113,8 @@ function addBackListener(acticeCountries) {
 
 
 
-export { addPreviewListener, neighbourListener, addBackListener }
+export {
+    addPreviewListener,
+    neighbourListener,
+    addBackListener
+}

@@ -1,7 +1,33 @@
-import { COUNTRIES, COUNTRY_MAP, MAIN_DIV, INPUT, DROP_DOWN_MENU, CARD_CON, MAP_CON, FLAG_CON, DETAILS_CON, PREVIEW_CON } from "./global_variables.js"
-import { addPreviewListener, addBackListener } from "./listeners.js";
-import { getRandomCountries, getNeighboursLinks, getNeighbours, getLanguages, getCurrencies, calculateZoom } from "./helper_functions.js"
-import { handleCountrySelected, handleBackButton, updateActiveCountries } from "./app.js";
+//==========================
+//======= IMPORTS ==========
+
+import {
+    COUNTRIES,
+    DROP_DOWN_MENU,
+    CARD_CON, MAP_CON,
+    FLAG_CON, DETAILS_CON,
+    PREVIEW_CON
+} from "./global_variables.js"
+import {
+    addPreviewListener
+} from "./listeners.js";
+import {
+    getRandomCountries,
+    getNeighboursLinks,
+    getNeighbours,
+    getLanguages,
+    getCurrencies,
+    getPopulation,
+    calculateZoom
+} from "./helper_functions.js"
+import {
+    handleCountrySelected,
+    updateActiveCountries
+} from "./app.js";
+
+//=============================
+//=============================
+
 
 
 // הצגת תפריט מדינות
@@ -84,32 +110,31 @@ function renderPreviewCard(country) {
 
 // כרטיס מדינה מלא
 function renderCountryCard(country) {
-    console.log(DETAILS_CON);
-    
     try {
         console.log(country);
-        // קבלת מטבעות, שפות, שכנים ולינקים לשכנים
+        // קבלת פרטים
         const currencies = getCurrencies(country);
         const languages = getLanguages(country);
         const neighbours = getNeighbours(country);
         const borderingCountriesLinks = getNeighboursLinks(neighbours);
+        const population = getPopulation(country);
 
         FLAG_CON.insertAdjacentHTML("beforeend", `
             <img src="${country.flags.png}" alt="Flag of ${country.name.common}">
-        `); 
+        `);
         DETAILS_CON.insertAdjacentHTML("beforeend", `
             <h2>${country.name.common}</h2>
             <p>
-                <b>Population:</b> ${country.population.toLocaleString()} <br>
+                <b>Population:</b> ${population} <br>
                 <b>Region:</b> ${country.region} <br>
                 <b>Capital:</b> ${country.capital ? country.capital[0] : "N/A"} <br>
                 <b>Languages:</b> ${languages} <br>
                 <b>Currency:</b> ${currencies} <br>
                 <b>Bordering Countries:</b> ${borderingCountriesLinks}
             </p>
-    `); 
+    `);
     } catch (error) {
-        console.error("Error rendering  card:", error);
+        console.error("Error rendering card:", error);
         CARD_CON.innerHTML = `
             <p>Failed to load country details.<br> Please try again later.</p>
         `;
@@ -141,7 +166,7 @@ async function loadMap(country) {
 }
 
 
-//
+// הדפסת loader
 function renderSpinner() {
     MAP_CON.insertAdjacentHTML("beforeend", `
         <span class="loader"></span>

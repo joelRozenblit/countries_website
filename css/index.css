@@ -1,19 +1,22 @@
 body {
-    font-family: Agbalumo, Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Rubik, Verdana, Geneva, Tahoma, sans-serif;
     color: #e9e7e7;
     margin: 0;
     padding: 0;
-    background-image: url("https://github.com/joelRozenblit/countries_website/blob/main/img/earth.png?raw=true");
+    background-image: url("/img/earth.png");
     background-size: cover;
     background-attachment: fixed;
 }
 
 
 
-h1{
+h1 {
     text-align: center;
     padding: 20px;
     margin: 0;
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 nav {
@@ -22,14 +25,26 @@ nav {
     border-radius: 10px;
 }
 
+b {
+    margin: 5px;
+    font-size: 1.2rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 
 .search-container {
     display: flex;
     align-items: center;
     border-radius: 5px;
     overflow: hidden;
-    width: 200px; /* קביעת רוחב קבוע לחיפוש */
+    width: 200px;
+    /* קביעת רוחב קבוע לחיפוש */
 }
+
 
 .search-container .form-control {
     flex: 1;
@@ -64,11 +79,13 @@ nav {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px; /* מרווח בין תיבת חיפוש לתפריט */
+    gap: 10px;
+    /* מרווח בין תיבת חיפוש לתפריט */
 }
 
 #select_id {
-    width: 200px; /* קביעת רוחב קבוע לתפריט הבחירה */
+    width: 200px;
+    /* קביעת רוחב קבוע לתפריט הבחירה */
     padding: 10px;
     border-radius: 10px;
     font-size: 16px;
@@ -79,7 +96,7 @@ nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    
+
 }
 
 /* עיצוב לתצוגת המדינות */
@@ -96,8 +113,10 @@ nav {
 
 /* עיצוב הכרטיסים */
 .card {
-    flex: 1 1 calc(33.33% - 40px); /* שליש מהשורה עם מרווח */
-    max-width: 300px; /* מקסימום רוחב לכרטיס */
+    flex: 1 1 calc(33.33% - 40px);
+    /* שליש מהשורה עם מרווח */
+    max-width: 300px;
+    /* מקסימום רוחב לכרטיס */
     margin: 5px;
     width: 300px;
     border-radius: 8px;
@@ -107,22 +126,16 @@ nav {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-@media (max-width: 992px) {
-    .card {
-        flex: 1 1 calc(50% - 40px); /* שני כרטיסים בשורה */
-    }
-}
-
-@media (max-width: 600px) {
-    .card {
-        flex: 1 1 calc(100% - 40px); /* כרטיס אחד בשורה */
-    }
-}
-
-
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #444;
 }
 
 .card-img-top {
@@ -137,12 +150,21 @@ nav {
     text-align: center;
 }
 
-.card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #444;
+@media (max-width: 992px) {
+    .card {
+        flex: 1 1 calc(50% - 40px);
+        /* שני כרטיסים בשורה */
+    }
 }
+
+@media (max-width: 600px) {
+    .card {
+        flex: 1 1 calc(100% - 40px);
+        /* כרטיס אחד בשורה */
+    }
+}
+
+
 
 /* עיצוב לתצוגת כרטיס מדינה */
 .container img {
@@ -171,20 +193,19 @@ nav {
 
 /* עיצוב כפתורים */
 button {
-    display: inline-block;
-    padding: 10px 20px;
+    margin: 10px;
+    padding: 12px 24px;
     font-size: 16px;
     color: #fff;
-    background-color: #3f4041;
+    background-color: #5b6978;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    margin: 10px;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #414040;
 }
 
 
@@ -202,6 +223,7 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 #dropdown_menu {
     position: absolute;
     width: 100%;
@@ -215,10 +237,12 @@ button:hover {
     list-style: none;
     padding: 0;
 }
+
 #dropdown_menu li {
     padding: 10px;
     cursor: pointer;
 }
+
 #dropdown_menu li:hover {
     background-color: #f0f0f0;
     color: #000;
@@ -247,32 +271,37 @@ button:hover {
 .loader {
     width: 50px;
     aspect-ratio: 1;
-    display:grid;
-    -webkit-mask: conic-gradient(from 15deg,#0000,#000);
+    display: grid;
+    -webkit-mask: conic-gradient(from 15deg, #0000, #000);
     animation: l26 1s infinite steps(12);
-  }
-  .loader,
-  .loader:before,
-  .loader:after{
+}
+
+.loader,
+.loader:before,
+.loader:after {
     background:
-      radial-gradient(closest-side at 50% 12.5%,
-       #f03355 96%,#0000) 50% 0/20% 80% repeat-y,
-      radial-gradient(closest-side at 12.5% 50%,
-       #f03355 96%,#0000) 0 50%/80% 20% repeat-x;
-  }
-  .loader:before,
-  .loader:after {
+        radial-gradient(closest-side at 50% 12.5%,
+            #f03355 96%, #0000) 50% 0/20% 80% repeat-y,
+        radial-gradient(closest-side at 12.5% 50%,
+            #f03355 96%, #0000) 0 50%/80% 20% repeat-x;
+}
+
+.loader:before,
+.loader:after {
     content: "";
     grid-area: 1/1;
     transform: rotate(30deg);
-  }
-  .loader:after {
+}
+
+.loader:after {
     transform: rotate(60deg);
-  }
-  
-  @keyframes l26 {
-    100% {transform:rotate(1turn)}
-  }
+}
+
+@keyframes l26 {
+    100% {
+        transform: rotate(1turn)
+    }
+}
 
 .hidden {
     display: none;

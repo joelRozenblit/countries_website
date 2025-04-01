@@ -17,4 +17,17 @@ const DETAILS_CON = document.querySelector("#details-con");
 const PREVIEW_CON = document.querySelector("#preview-con");
 
 
-export { COUNTRIES, COUNTRY_MAP, MAIN_DIV, INPUT, DROP_DOWN_MENU, RESULT_DIV, SORT_DIV, CARD_CON, MAP_CON, FLAG_CON, DETAILS_CON, PREVIEW_CON }
+export {
+    COUNTRIES,
+    COUNTRY_MAP,
+    MAIN_DIV,
+    INPUT,
+    DROP_DOWN_MENU,
+    RESULT_DIV,
+    SORT_DIV,
+    CARD_CON,
+    MAP_CON,
+    FLAG_CON,
+    DETAILS_CON,
+    PREVIEW_CON
+}

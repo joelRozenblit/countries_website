@@ -94,7 +94,7 @@ function handleBackButton() {
 
     // הוספת כפתור חזרה
     backCon.insertAdjacentHTML("beforeend", `
-        <button id="back_id" class="btn btn-primary">Back</button>
+        <button id="back_id" class="">Back</button>
     `);
 
     // מאזין לחיצה לכפתור
@@ -112,4 +112,10 @@ renderMainPreview();
 
 
 
-export { navEvent, handleSortChange, handleCountrySelected, handleBackButton, updateActiveCountries }
+export {
+    navEvent,
+    handleSortChange,
+    handleCountrySelected,
+    handleBackButton,
+    updateActiveCountries
+}

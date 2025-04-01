@@ -56,11 +56,19 @@ function getNeighboursLinks(neighbours) {
 }
 
 
+// קבלת מספר אוכלוסיה
+function getPopulation(country) {
+    const p = (country.population / 1_000_000).toFixed(2);
+    return p >= 1 ? `${p} Million` : country.population;
+}
+
+
 export {
     getRandomCountries,
     getNeighboursLinks,
     getNeighbours,
     getLanguages,
-    getCurrencies, 
+    getCurrencies,
+    getPopulation,
     calculateZoom
 }
