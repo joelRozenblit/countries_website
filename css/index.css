@@ -3,7 +3,7 @@ body {
     color: #e9e7e7;
     margin: 0;
     padding: 0;
-    background-image: url("img/earth.png");
+    background-image: url("https://github.com/joelRozenblit/countries_website/blob/main/img/earth.png?raw=true");
     background-size: cover;
     background-attachment: fixed;
 }
